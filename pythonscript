@@ -1,0 +1,18 @@
+import serial
+import string
+import time
+import requests
+#opeing serial port
+ser=serial.Serial('/dev/ttyACM0',9600)
+#it can different in your case like
+while True:
+    data=ser.readline()
+    print(data)
+    intval = int(data[:3])
+    if(intval > 200):
+        url = "https://maker.ifttt.com/trigger/gas_leaked_take_action_asap/json/with/key/gbbJaQ0UnNyk6-_aCtaFS"
+        blankdata = {"value1":"none","value2":"none","value3":"none"}
+        r = requests.post(url, data = blankdata)
+        print(r.text)
+        time.sleep(40)
+    #read serial data and print it on screen
